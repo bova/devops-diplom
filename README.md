@@ -91,6 +91,10 @@ timeout = 60
 ansible-playbook -i /home/vpovetkin/kubespray/inventory/mycluster/k8s_inventory.ini --become --become-user=root cluster.yml
 ```
 
+### Результат
+
+![diplom-task2-1](./screenshots/ansible_result.png)
+
 
 ## Создание тестового приложения
 
@@ -179,7 +183,7 @@ spec:
 
 1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
 
-Конфигурация представлена в этом выше в предудущем разделе
+Конфигурация представлена в предудущем разделе
 
 2. Http доступ к web интерфейсу grafana.
 
