@@ -1,5 +1,12 @@
 # Дипломная работа
 
+Быстрый доступ к артефактам:
+
+* [Код терраформ](./infra/)
+* [Код приложения myapp](https://github.com/bova/myapp.git)
+* [Приложение myapp](http://myapp.bova-vp.ru/)
+* [Grafana](http://grafana.bova-vp.ru/)
+* [Gitlab](https://gitlab.bova-vp.ru)
 
 ## Yandex Cloud
 
@@ -103,7 +110,7 @@ kubectl apply -f myapp-svc.yml -n mydev-ns
 Создание Ingress
 
 ```SH
-kubectl apply -f myapp-ingress-.yaml -n mydev-ns
+kubectl apply -f myapp-ingress.yaml -n mydev-ns
 ```
 
 ### Результат
