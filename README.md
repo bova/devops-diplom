@@ -8,7 +8,8 @@
 
 ## Создание облачной инфраструктуры
 
-> Создание сервисного аккаунта
+
+Создание сервисного аккаунта
 
 ```
 Имя: tfuser
@@ -17,13 +18,13 @@
 - editor на бакет
 ```
 
-> Создание бакета для хранения состояния terraform
+Создание бакета для хранения состояния terraform
 
 ```
 Имя бакета: tfstate-vp
 ```
 
-> Создание базы данных для блокировки состояния terraform
+Создание базы данных для блокировки состояния terraform
 
 ```
 Yandex Managed Service for YDB
@@ -32,11 +33,23 @@ Yandex Managed Service for YDB
 Название таблицы: tfsate-lock-table (Тип: Документная, Колонки: LockID (String))
 ```
 
-> Перенос state в S3
+Перенос state в S3
 
 ```SH
 terraform init -backend-config="access_key=..u5i3p4iNB.." -backend-config="secret_key=...McOV4R.."
 ```
+
+Применение конфигурации
+
+```sh
+terraform plan
+terraform apply
+```
+
+### Результат
+
+[Исходный код terraform](./infra/)
+
 
 ## Создание Kubernetes кластера
 
@@ -58,13 +71,14 @@ pip3 install -r requirements.txt
 # CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}        
 ```
 
-> vi ansible.cfg (Решение проблем с таймаутом)
+Решение проблем с таймаутом  
+vi ansible.cfg
 
 ```CONF
 timeout = 60
 ```
 
-> Команда создания кластера
+Команда создания кластера
 
 ```SH
 ansible-playbook -i /home/vpovetkin/kubespray/inventory/mycluster/k8s_inventory.ini --become --become-user=root cluster.yml
@@ -73,20 +87,20 @@ ansible-playbook -i /home/vpovetkin/kubespray/inventory/mycluster/k8s_inventory.
 
 ## Создание тестового приложения
 
-> Установка ingress-nginx
+Установка ingress-nginx
 
 ```SH
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/baremetal/deploy.yaml
 kubectl -n ingress-nginx get svc
 ```
 
-> Создание сервиса
+Создание сервиса
 
 ```SH
 kubectl apply -f myapp-svc.yml -n mydev-ns
 ```
 
-> Создание Ingress
+Создание Ingress
 
 ```SH
 kubectl apply -f myapp-ingress-.yaml -n mydev-ns
@@ -106,14 +120,14 @@ https://hub.docker.com/r/vpovetkin/myapp
 
 ## Подготовка cистемы мониторинга и деплой приложения
 
-> Экспорт конфигурации для подключения к кластеру
+
+Экспорт конфигурации для подключения к кластеру
 
 ```SH
 kubectl config view --minify --raw
 ```
 
-
-> Установка  HELM
+Установка  HELM
 
 ```SH
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -121,7 +135,7 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 ```
 
-> Установка Prometeus
+Установка Prometeus
 
 ```SH
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -129,7 +143,7 @@ helm repo update
 helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
 ```
 
-> Создание Ingress для Grafana  
+Создание Ingress для Grafana  
 vi ingress-grafana.yaml
 
 ```YAML
@@ -158,7 +172,7 @@ spec:
 
 1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
 
-Конфигурация представлена в этом документе
+Конфигурация представлена в этом выше в предудущем разделе
 
 2. Http доступ к web интерфейсу grafana.
 
@@ -176,8 +190,8 @@ http://myapp.bova-vp.ru/
 ## Установка и настройка CI/CD
 
 
-> Создание агента в Gitlab  
-файл: .gitlab/agents/mydev/config.yaml
+Создание агента в Gitlab  
+файл: *.gitlab/agents/mydev/config.yaml*
 
 ```YAML
 # path to config for agent k8s .gitlab/agents/mks-agent
@@ -185,7 +199,7 @@ ci_access:
   - id: myapp
 ```
 
-> Установка gitlab agent в кластер
+Установка gitlab agent в кластер
 
 ```SH
 helm repo add gitlab https://charts.gitlab.io
